@@ -15,4 +15,6 @@
 * "Fixed window" rate limit allows 100 requests per minute, and resets at the end, so you could potnetially send 200 requests in 2 seconds if you did it at the end and beginning of a threshold
 * "Sliding Winow" will continually test the last 60 seconds on each request to see if we've gone over
 
-* 
+## TinyURL 
+* look up cache locking
+* draw the diagram and previous diagram
