@@ -18,3 +18,37 @@
 ## TinyURL 
 * look up cache locking
 * draw the diagram and previous diagram
+
+## Twitter
+
+#### Application Server v.s. Webserver
+
+* webserver serves static content, applications server calcuclates and serves dynamic content
+* we have reverse proxy webservers: Traefik and NGINX, that can serve static and then relay dynamic requests to things like **Flask**, **Django**, or **Node.js**
+### Reverse Proxy Webserver Examples: 
+* Traefik,
+* NGINX,
+* Apache.
+
+* **Static Content:** Can directly serve static assets from a filesystem or cache for speed.
+* **Dynamic Content:** Forward requests to application servers (e.g., Flask, Django, Node.js).
+* **Additional Features:** Load balancing, SSL termination, caching, and security (e.g., request filtering).
+
+#### CDN (Cloud Delivery Network)
+when you hear CDN, think static files: text, images, videos
+* Pull CDN: you only update edge nodes when you make a request and you 'cache miss'
+* Push CDN: Origin server updates and is responsible for pushing that content to edge nodes
+
+#### Caching
+* Read through: On a cache miss, the cache **automatically** fetches the data from the origin server, stores it, and serves it to the application.
+* Lazy-Loading: On a cache miss, the cache ** conditionally based on the application's stipultation** fetches the data from the origin server, stores it, and serves it to the application.
+
+* Write through: Data is written to both the cache and the origin server simultaneously.
+* Write around: Data is written directly to the origin server, bypassing the cache. The cache only gets updated when a subsequent read request causes a cache miss.
+* Write back/behind: Data is written to the cache first and later asynchronously written to the origin server.
+
+#### Cache invalidation
+* LRU (Least Recently Used): best option imo, popular things will be sustained
+* LFU (Least Frequently Used): Based on total visits, OLD viral things will be kept
+* FIFO: queue, regardless of access patterns
+* TTL: expires based on time
