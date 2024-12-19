@@ -42,6 +42,7 @@ when you hear CDN, think static files: text, images, videos
 #### Caching
 * Read through: On a cache miss, the cache **automatically** fetches the data from the origin server, stores it, and serves it to the application.
 * Lazy-Loading: On a cache miss, the cache ** conditionally based on the application's stipultation** fetches the data from the origin server, stores it, and serves it to the application.
+![image](https://github.com/user-attachments/assets/18223096-3947-4fcd-bc2f-1bff0a4ad4f5)
 
 * Write through: Data is written to both the cache and the origin server simultaneously.
 * Write around: Data is written directly to the origin server, bypassing the cache. The cache only gets updated when a subsequent read request causes a cache miss.
