@@ -53,3 +53,17 @@ when you hear CDN, think static files: text, images, videos
 * LFU (Least Frequently Used): Based on total visits, OLD viral things will be kept
 * FIFO: queue, regardless of access patterns
 * TTL: expires based on time
+
+
+define fault tolerance
+
+define redundance
+
+discord or chat apps in general rely on low latency; how do we achieve this
+
+practice rough calculations for iops/s gb/s , how many people in a server
+
+per channel matters
+
+maxes on msg for bytes/chars
+
