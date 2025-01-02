@@ -20,8 +20,12 @@
 * What is the ratio of reads to writes (maybe 100:1, or 1000:1)
 * How many reads per day? (100,000 reads, so maybe 1000 writes as well)
 * How many reads per second? ( 100,000 / 24 * 60 * 60 ) -> (100,000 / 25 * 3600) -> 4000/3600  -> about 2 reads per second
+* How much storage do we need? (1000 writes per day means 30,000 writes per month. so we need to ask more questions)
+* How much data is in each entry? well a shorturl we agreed is 8 chars, which is 8 bytes. The longurl could average 100 chars which is 100 bytes. A date is 4 bytes, so that's about 112 bytes per entry, we'll call it 100 for simplicity. So we need 3,000,000 bytes per month, which is 3MB so x12 is 36MB per year.
+* How is hashing going to work? (if we use database sharding/partitioning, we have to use consitent hashing in case a shard is removed)
+* **Sharding is a form of paritioning called Horizontal Paritioning**
   
-* How are we doing **cache eviction** ( I like always using LRU (least recently used) unless there's a reason not to)
+* How are we doing **cache eviction** ( I like always using LRU (least recently used, as opposed to LFU) unless there's a reason not to)
 * How are we doing **cache invalidation** (we can set a TTL)
 * How are we doing **DynamoDB invalidation** (we can use DynamoDB's TTL feature on our "expiration" field)
 * how many possible urls are there?
