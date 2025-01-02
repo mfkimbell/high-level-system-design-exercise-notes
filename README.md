@@ -81,7 +81,22 @@ when you hear CDN, think static files: text, images, videos
 * TTL: expires based on time (this is more cache eviction rather than invalidation)
 
 ## Design Discord
-define fault tolerance
+#### Fault tolerance
+* Load Balancers can prevent issues when servers go down (AWS has NLB, ALB, and DNS based LB)
+* Kubernetes and EKS can help prevent issues when containers go down
+* Database replication (both local and in different availability zones) can help when database shards or entire databases go down
+* We have failover methods when things crash (active-active means they both do work, active-passive means the backup is only used when the original crashes)
+* AWS Auto-scaling solutions like **Auto Scaling Groups** for EC2, **ECS Autoscaling** for both services (host and loadbalance groupings of pods) and clusters (host services), **Fargate** is serverless and handles the scaling for you (can integrate with EKS). **AWS EKS** can use HPA (horizontal pod autoscaling). 
+
+Imagine a global e-commerce platform:
+1. **Redundancy**:
+   - Multiple servers in different regions handle user requests.
+2. **Load Balancing**:
+   - Requests are distributed across these servers using AWS Elastic Load Balancer.
+3. **Failover**:
+   - If a region goes offline, Route 53 reroutes traffic to a backup region.
+4. **Replication**:
+   - Databases replicate across regions to ensure data consistency and disaster r
 
 define redundance
 
