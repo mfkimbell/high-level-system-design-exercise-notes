@@ -3,6 +3,13 @@
 ## Random facts
 * 32GB of RAM is a lot for a personal computer, but for systems like Redis and Memcached, 256GB is entirely manageable. High-end servers can support up to 500GB or even 1TB of RAM, making them ideal for in-memory caching and real-time data processing at scale
 
+## Security
+If you wanted to secure a backend so only your frontend can access you can do the following:
+* **FOR AWS** Security groups can isolate by resource (stateful, only have allow rules) and NACLs (Network Access Control List) can limit by VPC/subnet-level. NACLs are stateless meaning that incoming traffic is not automatically allowed to exit (unlike Security Groups which are stateful)
+* Quick refresh, CIDR blocks can be divided into subnets. Subnets are smaller ranges of IP addresses, like 10.0.0.0/24 would be 255 ip addresses. from 10.0.0.1 -> 10.0.0.0.255
+* use a secret/API key stored in the cloud, this would be put in the "Authorization" header of the api call
+* use a JWT token
+
 ## Design a rate-limiter
 * fail open: when it fails, the system still allows traffic
 * fail closed: when down, all traffic is blocked
@@ -57,10 +64,11 @@ when you hear CDN, think static files: text, images, videos
 * Push CDN: Origin server updates and is responsible for pushing that content to edge nodes
 
 #### Caching
+#### Read strategies
 * Read through: On a cache miss, the cache **automatically** fetches the data from the origin server, stores it, and serves it to the application.
-* Lazy-Loading: On a cache miss, the cache ** conditionally based on the application's stipultation** fetches the data from the origin server, stores it, and serves it to the application.
+* Lazy-Loading (cache aside): On a cache miss, the APPLICATION ** conditionally based on the application's stipultation** fetches the data from the origin server, stores it, and serves it to the application.
 ![image](https://github.com/user-attachments/assets/18223096-3947-4fcd-bc2f-1bff0a4ad4f5)
-
+#### Write strategies
 * Write through: Data is written to both the cache and the origin server simultaneously.
 * Write around: Data is written directly to the origin server, bypassing the cache. The cache only gets updated when a subsequent read request causes a cache miss.
 * Write back/behind: Data is written to the cache first and later asynchronously written to the origin server.
@@ -72,7 +80,7 @@ when you hear CDN, think static files: text, images, videos
 #### Cache Invalidation
 * TTL: expires based on time (this is more cache eviction rather than invalidation)
 
-
+## Design Discord
 define fault tolerance
 
 define redundance
