@@ -97,8 +97,8 @@ Imagine a global e-commerce platform:
    - If a region goes offline, Route 53 reroutes traffic to a backup region.
 4. **Replication**:
    - Databases replicate across regions to ensure data consistency and disaster r
-
-define redundance
+     
+#### Latency
 
 discord or chat apps in general rely on low latency; how do we achieve this
 
