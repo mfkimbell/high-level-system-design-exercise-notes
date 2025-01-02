@@ -65,11 +65,12 @@ when you hear CDN, think static files: text, images, videos
 * Write around: Data is written directly to the origin server, bypassing the cache. The cache only gets updated when a subsequent read request causes a cache miss.
 * Write back/behind: Data is written to the cache first and later asynchronously written to the origin server.
 
-#### Cache invalidation
+#### Cache Evication
 * LRU (Least Recently Used): best option imo, popular things will be sustained
 * LFU (Least Frequently Used): Based on total visits, OLD viral things will be kept
 * FIFO: queue, regardless of access patterns
-* TTL: expires based on time
+#### Cache Invalidation
+* TTL: expires based on time (this is more cache eviction rather than invalidation)
 
 
 define fault tolerance
