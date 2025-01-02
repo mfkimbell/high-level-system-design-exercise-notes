@@ -16,9 +16,22 @@
 * "Sliding Winow" will continually test the last 60 seconds on each request to see if we've gone over
 
 ## TinyURL 
-* look up cache locking
-* draw the diagram and previous diagram
+#### Good questions
+* What is the ratio of reads to writes (maybe 100:1, or 1000:1)
+* How many reads per day? (100,000 reads, so maybe 1000 writes as well)
+* How many reads per second? ( 100,000 / 24 * 60 * 60 ) -> (100,000 / 25 * 3600) -> 4000/3600  -> about 2 reads per second
+  
+* How are we doing **cache eviction** ( I like always using LRU (least recently used) unless there's a reason not to)
+* How are we doing **cache invalidation** (we can set a TTL)
+* How are we doing **DynamoDB invalidation** (we can use DynamoDB's TTL feature on our "expiration" field)
+* how many possible urls are there?
+<img width="411" alt="Screenshot 2025-01-02 at 12 00 15 PM" src="https://github.com/user-attachments/assets/41b59db0-d52f-458c-a412-4deaf1fcc777" />
 
+#### How many reads is enough to consider NoSQL
+* generally greater than 10,000 read/writes per second is enough to start consider nosql
+* however, its important to consider that caching can reduce reads by 80-90%
+* so it's more like if WRITES are above 10,000 and if reads are above 100,000 (with caching)
+  
 ## Twitter
 
 #### Application Server v.s. Webserver
