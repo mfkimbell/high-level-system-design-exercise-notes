@@ -101,11 +101,29 @@ Imagine a global e-commerce platform:
      
 #### Latency
 
-discord or chat apps in general rely on low latency; how do we achieve this
+* 5M active users per day, they'll probably do around 10 messages a day
+* 50M messages per day / 24 / 60 / 60 -> 50M / 25 / 3600 -> 2M / 4000 ->  500,000 / 1000 -> 500 wps
+* max limit on a message is how much, 2000 characters, so 2000 bytes, but maybe we average at 50 bytes?
+* so it would be 25kilobytes / second for writes 
 
-practice rough calculations for iops/s gb/s , how many people in a server
+* 20,000 people can be in a server max
+* 
+
+- low latency with comm apps
+- 
 
 per channel matters
 
 maxes on msg for bytes/chars
+
+
+
+## Youtube
+
+there are approximately 100,000 seconds in a day (actually 86k)
+
+when you talk about average numbers, you need to aknowledge that there is peak traffic time, and especially less traffic at night if you're just in the US
+
+15 min videos around at 60fps at 1080 is around 1GB of data
+
 
