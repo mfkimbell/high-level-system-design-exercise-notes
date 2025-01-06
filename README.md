@@ -109,12 +109,28 @@ Imagine a global e-commerce platform:
 * 20,000 people can be in a server max
 * 
 
-- low latency with comm apps
-- 
+#### Websocket
+* we want websocket for live updates, but http for pagination and pulling of old messages
+* API Gateway has a websocket api
+* When a user connects, store their connection ID (provided by API Gateway) in a DynamoDB table
+* When a user sends a message, the Lambda function for sendMessage can:
+1. Retrieve all connection IDs for the channel from DynamoDB.
+2. Use the API Gateway Management API to push the message to all active connections:
+* Use the $disconnect route to remove connection IDs from DynamoDB when a user disconnects.
+* websockets can and will need load balancers cause it cannot support inifite connections
 
-per channel matters
+#### Data storage
+<img width="495" alt="Screenshot 2025-01-05 at 6 01 30 PM" src="https://github.com/user-attachments/assets/11aa34ad-ec5d-4bbd-9702-d99122026367" />
+<img width="625" alt="Screenshot 2025-01-05 at 6 21 40 PM" src="https://github.com/user-attachments/assets/9155c7a6-9252-4e0d-9f01-56e31ea06c25" />
 
-maxes on msg for bytes/chars
+
+###### DynamoDB
+* **Sort keys** order data **within a parition**, so we can do things like search for items < value
+* **Global Secondary Indexes (GSI)** allow you to query data **across all paritions**
+* Adds storage and write costs because DynamoDB maintains a copy of the indexed attributes in the GSI.
+
+* maxes on msg for bytes/chars will help with the math for writes and reads
+  
 
 
 
