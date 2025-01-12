@@ -136,10 +136,41 @@ Imagine a global e-commerce platform:
 
 ## Youtube
 
-there are approximately 100,000 seconds in a day (actually 86k)
+1,000,000,000
+5,000,000,000 watches a day
+50,000,000 uploads a day
+50,000,000 x 5GB = 250,000,000GB a day
+250,000,000 / 100,000
+25,000 GB / second for WRITES
+**not quite 2,500,000 GB / second for READS cause we do streaming and chunking**
+
+**there are approximately 100,000 seconds in a day (actually 86k)**
 
 when you talk about average numbers, you need to aknowledge that there is peak traffic time, and especially less traffic at night if you're just in the US
 
 15 min videos around at 60fps at 1080 is around 1GB of data
+
+#### Scaling youtube writes
+* first we have an api (API Gateway) and it's scaled with a loadbalancer (NGINX or AWS ALB) 
+* next we have an upload service (AWS ECS ((ecs task)), EKS both scale) , which chunks the video (AWS S3 multipart upload)
+* videos are chunked when sending, so network interruptions don't restart the upload from scratch
+* we have an asyncronous message so it decouples the upload to object storage and then processing (can use an AWS SQS queue or use a pub/sub model with AWS SNS and have the transcoding service subscribe to it) this way it's faster (user gets feedback after s3 upload, not transacoding) its more fault tolerant and it can handle spike traffic better
+* the queue will trigger various services, data replication, transcoding, and meta-data storage (services on ECS or EKS)
+* split the encoding service into multiple workers, which process in batches, and the encoded data is also stored in S3
+* the metadata goes into Google Big Table (aws equivalent??) because it's good for writes (a wide table database)
+* we also use sharding cause the data is so vast
+* sharding is HORIZONTAL PARTITIONING (hashign and decreasing rows) vs VERTICAL PARTITIONING (splitting columns into two tables)
+
+#### Scaling youtube reads
+<img width="535" alt="Screenshot 2025-01-12 at 12 03 41 PM" src="https://github.com/user-attachments/assets/933e2ffb-b371-4353-855a-12748fc529dd" />
+
+* user makes a request to API Gateway which is scaled by NGINX or ALB
+* this would handle rate limiting and authentication
+* ALB can rate limit based on IP and API Gateway can rate limit based on user, API key, or resource (nonspecific, whole system),  built into both of them
+* API Gateway queries for metadata from dynamoDB (this step can also be cached with elasticache/redis/memcached) 
+* The request would likely default to a resolution, but can be changed by the user or automatically
+* After a user is authenticated and the api recieves the metadata as well as a **cloudfront URL** if it's cached in the CDN or a pre-signed S3 URL for Origin direct access in S3 (which afterward, it would likely be added to the CDN)
+* Adaptive Bitrate Streaming the videos are divided into 10 second chunks at various resolutions and bitrates, the video is then streamed based on network speed/bandwith at different qualities
+* CDNs autoscale, also we can add read replicas to DynamoDB
 
 
