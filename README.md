@@ -174,3 +174,14 @@ when you talk about average numbers, you need to aknowledge that there is peak t
 * CDNs autoscale, also we can add read replicas to DynamoDB
 
 
+## Design Google Drive
+* fjiles need ot be private
+* block level storage is cheaper, must be reassembled, needs KV store for it maybe, we can do "deduplication" which doens't store du;licatte blocks, could be done on a global level or EVERY user, multi-user!! also allows for CHUNKING (save partial upload)
+* paste my overviews to notes
+* FILE SYSTEM VS OBJECT STORE (edit capabilities)
+* look up content addressable sotrage
+* folders in a kv store? whyu?
+* file also has reference to folder, why not just do it in name like AWS?
+* maybe we could implement a garbage colleciton sserverice that goes and tracks how manuy users are using the file in the kv sotre, and perdodically goes through and delted duplicates
+* can setup backup loadbalancers iwth a heartbeat ping, can use **Zookeeper** to coordiante heartbeat and other distibuted system stuff
+
