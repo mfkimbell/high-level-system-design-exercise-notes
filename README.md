@@ -1,5 +1,119 @@
 # high-level-system-design-exercise-notes
 
+## What should you consider for EVERY DIAGRA<
+
+Here’s a comprehensive list of requirements every **architecture diagram** should include, incorporating industry-standard considerations for designing and communicating distributed systems effectively:
+
+---
+
+### **1. Functional Requirements**
+   - **Use Cases**: Clearly define the primary use cases the system is designed to handle (e.g., e-commerce, messaging, data processing).
+   - **User Interaction Flow**: Represent how users or services interact with the system at a high level (e.g., APIs, UI, integrations).
+
+---
+
+### **2. Non-Functional Requirements**
+   - **Scalability**:
+     - Expected system growth (e.g., projected DAU, monthly growth rate).
+     - Load expectations: Peak requests per second (RPS), read/write ratio.
+   - **Latency**:
+     - Define expected response times for user-facing operations (e.g., ≤100ms for search results).
+     - Set acceptable thresholds for backend processes (e.g., ≤500ms for batch processing or analytics).
+     - HOW??? PUT MORE HOWS FOR THESES? CDN??? CACHE????
+   - **Availability**:
+     - Target uptime percentage (e.g., 99.9%, 99.99%, or higher for mission-critical systems).
+     - Redundancy and failover strategies for system components.
+   - **Partition Safety**:
+     - Mitigation strategies for network partitions, natural disasters, or regional outages.
+     - Multi-region failover and disaster recovery plans.
+   - **Security**:
+     - Authentication and authorization mechanisms.
+     - Data encryption (at rest and in transit) and compliance with standards (e.g., GDPR, HIPAA).
+
+---
+
+### **3. CAP and PACELC**
+   - **CAP Theorem**:
+     - Clearly state trade-offs between **Consistency**, **Availability**, and **Partition Tolerance**.
+     - Highlight the system's behavior during network partitions (e.g., eventual consistency vs. strong consistency).
+   - **PACELC**:
+     - Consider trade-offs when there is no partition: **Latency vs. Consistency** in normal operating conditions.
+
+---
+
+### **4. Data Management**
+TRY TO DEFINE THE TABLES!!! WHATS IN THEM???/
+   - **Data Storage**:
+     - Identify types of storage used (e.g., **SQL** for structured data, **NoSQL** for high scalability, **Object Storage** like S3 for unstructured data).
+     - Define data partitioning and replication strategies.
+   - **Sharding**:
+      - how are we sharding, what is the key, are we sharding at all, sharding vs partition?
+   - **Data Consistency**:
+     - Outline consistency models (e.g., strong, eventual, causal).
+   - **Data Retention and Archiving**:
+     - Plan for long-term data retention, archiving, and retrieval policies.
+   - **Backup and Recovery**:
+     - Define backup frequency and recovery time objectives (RTO/RPO).
+
+---
+
+### **5. Observability and Monitoring**
+   - **Logging and Metrics**:
+     - Define key performance indicators (KPIs) for system health (e.g., CPU usage, error rates, latency).
+   - **Tracing**:
+     - Represent end-to-end request tracing for debugging and performance analysis.
+   - **Alerts**:
+     - Define critical alerts (e.g., high latency, node failure, partition issues).
+
+---
+
+### **6. Deployment and Infrastructure**
+   - **Cloud/On-Prem**:
+     - Specify where the system is hosted (e.g., AWS, Azure, GCP, or on-premise data centers).
+   - **Compute Resources**:
+     - Highlight the compute layer: VMs, Kubernetes clusters, serverless functions, etc.
+   - **Load Balancing**:
+     - Describe traffic distribution strategies (e.g., DNS-based, L7 load balancers).
+   - **Network Architecture**:
+     - Illustrate regional distribution, edge nodes, and CDN integration.
+   - **CI/CD Pipeline**:
+     - Briefly indicate deployment strategies (e.g., blue-green, canary deployments).
+
+---
+
+### **7. Fault Tolerance and Reliability**
+   - **Redundancy**:
+     - Describe replication mechanisms for fault tolerance (e.g., primary-secondary, sharded replication).
+   - **Error Handling**:
+     - Plan for dead letter queues, retries, and circuit breakers for failures.
+   - **Disaster Recovery**:
+     - Define recovery strategies (e.g., warm/cold standby, multi-region replication).
+
+---
+
+### **8. Diagram Specifics**
+   - **Component Overview**:
+     - Include core system components (e.g., APIs, databases, services, storage layers).
+   - **Data Flow**:
+     - Illustrate how data flows through the system, including inputs and outputs.
+   - **Key Interactions**:
+     - Highlight integrations with external systems or dependencies (e.g., payment gateways, third-party APIs).
+
+---
+
+### **9. Future Considerations**
+   - **Scalability Potential**:
+     - Note how the system is designed to scale (horizontal vs. vertical scaling).
+   - **Extensibility**:
+     - Show areas where the architecture allows for feature additions or modular upgrades.
+
+---
+
+### **10. Documentation**
+   - Ensure the diagram is accompanied by a glossary of terms, detailed descriptions of components, and a legend for symbols used.
+
+By including these details, the architecture diagram provides a holistic view of the system, making it easier to evaluate, maintain, and improve.
+
 ## Random facts
 * 32GB of RAM is a lot for a personal computer, but for systems like Redis and Memcached, 256GB is entirely manageable. High-end servers can support up to 500GB or even 1TB of RAM, making them ideal for in-memory caching and real-time data processing at scale
 * Summary: Why NoSQL Is Faster: Avoids schema validation and normalization overhead. Uses distributed, horizontal scaling to reduce node load. Skips or limits ACID compliance for performance. Optimized for specific access patterns and workloads. In-memory and append-only storage engines accelerate reads and writes.
@@ -184,4 +298,11 @@ when you talk about average numbers, you need to aknowledge that there is peak t
 * file also has reference to folder, why not just do it in name like AWS?
 * maybe we could implement a garbage colleciton sserverice that goes and tracks how manuy users are using the file in the kv sotre, and perdodically goes through and delted duplicates
 * can setup backup loadbalancers iwth a heartbeat ping, can use **Zookeeper** to coordiante heartbeat and other distibuted system stuff
+
+## Design Google Maps
+* make a list of requirements that EVERY ARCHITECHTURE DIAGRAM NEEDS, DAU/scale reads and writes , latency (how fast should a user expect a response), availability (will the system always be available to use), partition safety (i tie this in with availbility, so natural disasters, network disconnects/partitions), CAP and PACELC, data storage (s3, nosql, sql) IM ADDING THIS TO THE TOP, CLEAN THIS UP LATER
+* review dkstras and some graph algorithsm
+* read about spacial indexing and determing its most general uses, he says its upported by most databases
+* look up kafka vs kinesis, when do we need these?
+* 
 
