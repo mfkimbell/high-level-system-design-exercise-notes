@@ -42,7 +42,7 @@ Here’s a comprehensive list of requirements every **architecture diagram** sho
 ---
 
 ### **4. Data Management**
-TRY TO DEFINE THE TABLES!!! WHATS IN THEM???/
+**TRY TO DEFINE the tables needed and the data inside those tables**
    - **Data Storage**:
      - Identify types of storage used (e.g., **SQL** for structured data, **NoSQL** for high scalability, **Object Storage** like S3 for unstructured data).
      - Define data partitioning and replication strategies.
@@ -55,42 +55,6 @@ TRY TO DEFINE THE TABLES!!! WHATS IN THEM???/
    - **Backup and Recovery**:
      - Define backup frequency and recovery time objectives (RTO/RPO).
 
----
-
-### **5. Observability and Monitoring**
-   - **Logging and Metrics**:
-     - Define key performance indicators (KPIs) for system health (e.g., CPU usage, error rates, latency).
-   - **Tracing**:
-     - Represent end-to-end request tracing for debugging and performance analysis.
-   - **Alerts**:
-     - Define critical alerts (e.g., high latency, node failure, partition issues).
-
----
-
-### **6. Deployment and Infrastructure**
-   - **Cloud/On-Prem**:
-     - Specify where the system is hosted (e.g., AWS, Azure, GCP, or on-premise data centers).
-   - **Compute Resources**:
-     - Highlight the compute layer: VMs, Kubernetes clusters, serverless functions, etc.
-   - **Load Balancing**:
-     - Describe traffic distribution strategies (e.g., DNS-based, L7 load balancers).
-   - **Network Architecture**:
-     - Illustrate regional distribution, edge nodes, and CDN integration.
-   - **CI/CD Pipeline**:
-     - Briefly indicate deployment strategies (e.g., blue-green, canary deployments).
-
----
-
-### **7. Fault Tolerance and Reliability**
-   - **Redundancy**:
-     - Describe replication mechanisms for fault tolerance (e.g., primary-secondary, sharded replication).
-   - **Error Handling**:
-     - Plan for dead letter queues, retries, and circuit breakers for failures.
-   - **Disaster Recovery**:
-     - Define recovery strategies (e.g., warm/cold standby, multi-region replication).
-
----
-
 ### **8. Diagram Specifics**
    - **Component Overview**:
      - Include core system components (e.g., APIs, databases, services, storage layers).
@@ -99,22 +63,10 @@ TRY TO DEFINE THE TABLES!!! WHATS IN THEM???/
    - **Key Interactions**:
      - Highlight integrations with external systems or dependencies (e.g., payment gateways, third-party APIs).
 
----
-
-### **9. Future Considerations**
-   - **Scalability Potential**:
-     - Note how the system is designed to scale (horizontal vs. vertical scaling).
-   - **Extensibility**:
-     - Show areas where the architecture allows for feature additions or modular upgrades.
-
----
-
-### **10. Documentation**
-   - Ensure the diagram is accompanied by a glossary of terms, detailed descriptions of components, and a legend for symbols used.
-
 By including these details, the architecture diagram provides a holistic view of the system, making it easier to evaluate, maintain, and improve.
 
 ## Random facts
+* for interview purposes lets assume **the average image is 10MB**, which is **10 MILLION BYTES**
 * 32GB of RAM is a lot for a personal computer, but for systems like Redis and Memcached, 256GB is entirely manageable. High-end servers can support up to 500GB or even 1TB of RAM, making them ideal for in-memory caching and real-time data processing at scale
 * Summary: Why NoSQL Is Faster: Avoids schema validation and normalization overhead. Uses distributed, horizontal scaling to reduce node load. Skips or limits ACID compliance for performance. Optimized for specific access patterns and workloads. In-memory and append-only storage engines accelerate reads and writes.
 
@@ -138,6 +90,8 @@ If you wanted to secure a backend so only your frontend can access you can do th
 * "Sliding Winow" will continually test the last 60 seconds on each request to see if we've gone over
 
 ## TinyURL 
+<img width="670" alt="Screenshot 2025-01-20 at 3 07 42 PM" src="https://github.com/user-attachments/assets/8dad85b2-9ee5-4dd9-b736-899ba900a9a7" />
+
 #### Good questions
 * What is the ratio of reads to writes (maybe 100:1, or 1000:1)
 * How many reads per day? (100,000 reads, so maybe 1000 writes as well)
@@ -196,6 +150,9 @@ when you hear CDN, think static files: text, images, videos
 * TTL: expires based on time (this is more cache eviction rather than invalidation)
 
 ## Design Discord
+
+<img width="663" alt="Screenshot 2025-01-20 at 3 07 27 PM" src="https://github.com/user-attachments/assets/ae49aa4e-c058-46b1-9d50-aa23c4c919a5" />
+
 #### Fault tolerance
 * Load Balancers can prevent issues when servers go down (AWS has NLB, ALB, and DNS based LB)
 * Kubernetes and EKS can help prevent issues when containers go down
@@ -249,6 +206,7 @@ Imagine a global e-commerce platform:
 
 
 ## Youtube
+<img width="607" alt="Screenshot 2025-01-20 at 3 07 09 PM" src="https://github.com/user-attachments/assets/febc9bc4-6efa-4706-a8fd-7e7cb9c5a2b4" />
 
 1,000,000,000
 5,000,000,000 watches a day
@@ -289,18 +247,18 @@ when you talk about average numbers, you need to aknowledge that there is peak t
 
 
 ## Design Google Drive
-* fjiles need ot be private
-* block level storage is cheaper, must be reassembled, needs KV store for it maybe, we can do "deduplication" which doens't store du;licatte blocks, could be done on a global level or EVERY user, multi-user!! also allows for CHUNKING (save partial upload)
-* paste my overviews to notes
-* FILE SYSTEM VS OBJECT STORE (edit capabilities)
-* look up content addressable sotrage
-* folders in a kv store? whyu?
-* file also has reference to folder, why not just do it in name like AWS?
-* maybe we could implement a garbage colleciton sserverice that goes and tracks how manuy users are using the file in the kv sotre, and perdodically goes through and delted duplicates
-* can setup backup loadbalancers iwth a heartbeat ping, can use **Zookeeper** to coordiante heartbeat and other distibuted system stuff
+* HDFS (Hadoop Distributed File System) is a distributed file system designed to store large datasets across multiple nodes in a fault-tolerant and scalable manner. HDFS is a distributed file system that allows for append operations and file modifications.
+* **File systems use block level storage by default!!!** This means you can add new data to an existing file or update chunks of a file as part of a distributed computation process.
+* HDFS users block storage. When editing, HDFS ensures only the affected blocks are updated or re-replicated.
+* block level storage is cheaper, data must be reassembled,, we can do "deduplication" which doens't store duplicatte blocks, could be done on a global level or EVERY user.
+* also allows for CHUNKING (save partial upload)
+* ALso imporantantly you need a **metadata table** to keep track of which blocks belong to which file, for large files, you could even grab blocks in parallel.
+* for instance, we can use the file metadata table to keep track of who is allowed to access the file, and we can use this in conjunction with the congnito token to add security
+* Content Addressable Storage is a storage paradigm where data is identified and retrieved based on its content (e.g., hash) rather than a traditional file path or name. So we use hashes to keep track of blocks, and duplicated data is not stored
+* we COULD implement a garbage colleciton sserverice that goes and tracks how manuy users own the file in the kv sotre, and perdodically goes through and delted duplicates
+* to ensure safety when using a loadbalancer, you can setup backup loadbalancers wtih a heartbeat ping, can use **Zookeeper** to coordiante heartbeat and other distibuted system stuff
 
 ## Design Google Maps
-* make a list of requirements that EVERY ARCHITECHTURE DIAGRAM NEEDS, DAU/scale reads and writes , latency (how fast should a user expect a response), availability (will the system always be available to use), partition safety (i tie this in with availbility, so natural disasters, network disconnects/partitions), CAP and PACELC, data storage (s3, nosql, sql) IM ADDING THIS TO THE TOP, CLEAN THIS UP LATER
 * review dkstras and some graph algorithsm
 * read about spacial indexing and determing its most general uses, he says its upported by most databases
 * look up kafka vs kinesis, when do we need these?
