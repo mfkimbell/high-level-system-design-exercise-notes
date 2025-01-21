@@ -247,6 +247,7 @@ when you talk about average numbers, you need to aknowledge that there is peak t
 
 
 ## Design Google Drive
+<img width="935" alt="Screenshot 2025-01-20 at 4 29 27 PM" src="https://github.com/user-attachments/assets/d84f58fd-de09-45d0-866d-a9af4a9fca22" />
 * HDFS (Hadoop Distributed File System) is a distributed file system designed to store large datasets across multiple nodes in a fault-tolerant and scalable manner. HDFS is a distributed file system that allows for append operations and file modifications.
 * **File systems use block level storage by default!!!** This means you can add new data to an existing file or update chunks of a file as part of a distributed computation process.
 * HDFS users block storage. When editing, HDFS ensures only the affected blocks are updated or re-replicated.
