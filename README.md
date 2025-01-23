@@ -248,6 +248,7 @@ when you talk about average numbers, you need to aknowledge that there is peak t
 
 ## Design Google Drive
 <img width="935" alt="Screenshot 2025-01-20 at 4 29 27 PM" src="https://github.com/user-attachments/assets/d84f58fd-de09-45d0-866d-a9af4a9fca22" />
+
 * HDFS (Hadoop Distributed File System) is a distributed file system designed to store large datasets across multiple nodes in a fault-tolerant and scalable manner. HDFS is a distributed file system that allows for append operations and file modifications.
 * **File systems use block level storage by default!!!** This means you can add new data to an existing file or update chunks of a file as part of a distributed computation process.
 * HDFS users block storage. When editing, HDFS ensures only the affected blocks are updated or re-replicated.
@@ -260,8 +261,19 @@ when you talk about average numbers, you need to aknowledge that there is peak t
 * to ensure safety when using a loadbalancer, you can setup backup loadbalancers wtih a heartbeat ping, can use **Zookeeper** to coordiante heartbeat and other distibuted system stuff
 
 ## Design Google Maps
-* review dkstras and some graph algorithsm
-* read about spacial indexing and determing its most general uses, he says its upported by most databases
-* look up kafka vs kinesis, when do we need these?
-* 
+* **Kafka** is a distributed event streaming platform designed for high-throughput, fault-tolerant, and scalable message/event handling.
+* It acts as a pub-sub system (publish/subscribe) where producers publish messages (events) to topics, and consumers subscribe to topics to process messages.
+![image](https://github.com/user-attachments/assets/0f97ac0f-8b36-467a-9823-97bda4f129bc)
+* its all about **real time** and **need for scalability**
+* Kafka Decouples Producers and Consumers, Without Kafka: Microservices must do things like push logs directly to S3 or Elasticsearch. Each service must be aware of the destination and handle failures/retries. With Kafka: Microservices (producers) send logs to Kafka topics. Kafka stores the logs durably and decouples producers from consumers. Consumers (like S3, Elasticsearch, or analytics systems) can independently process logs at their own pace.
+<img width="719" alt="Screenshot 2025-01-22 at 7 02 49 PM" src="https://github.com/user-attachments/assets/e7bb2361-596a-44f4-bfe2-299bacf937b6" />
 
+Industry Use Cases:
+Uber: For collecting and processing GPS/location data in real-time.
+Netflix: For tracking user activities and feeding them into analytics and recommendation systems.
+LinkedIn: Initially developed Kafka for activity stream data.
+
+
+High Event Volume:
+* Example: Handling millions of events per second (e.g., user registrations or transaction logs).
+* great for MANY MANY consumers
