@@ -277,3 +277,35 @@ LinkedIn: Initially developed Kafka for activity stream data.
 High Event Volume:
 * Example: Handling millions of events per second (e.g., user registrations or transaction logs).
 * great for MANY MANY consumers
+
+## Design a Key-Value Store
+* Leader-Leader replication is **better for writes** and Leader-Follower, because multiple db copies can accept writes
+<img width="970" alt="Screenshot 2025-01-23 at 5 21 18 PM" src="https://github.com/user-attachments/assets/8de42f66-15ea-44f0-82b0-eb16fd00a3cc" />
+### PACELC theorem implications 
+* try and describe pac vs elc, if you can't look it up, think about an example where a node goes down and the latency it takes to update a leader-follower even when things aren't down. consistence takes time. 
+* we can use a "quorum" to decide how much latency vs consistency we should have. AKA should we wait for 1, some, or ALL of the nodes
+* Databases like **Cassandra and MongoDB** can have custom quorum values or "tunable consistency"
+#### Circular/Consistent Hashing for database sharding
+* When using consistent hashing in distributed systems, virtual nodes (vNodes) are often employed to improve load balancing and fault tolerance.
+* What They Are: Instead of assigning one contiguous range of the hash space to each physical node, multiple smaller virtual nodes are created per physical node.
+* How they work: A physical node is responsible for multiple vNodes spread across the hash ring.
+* When a node joins or leaves, only its vNodes are redistributed, making the rebalancing more granular and efficient.
+#### Detecting node failures
+* **zookeeper** is a tool you can use, all nodes could send heartbeats to zookeeper
+* a more decentralized way is to use **gossip protocol** where db nodes keep track of one anoteher
+* HOWEVER you can't rely on one node to determine, since THAT NODE might be the one taht disconnected, so we need MANY nodes to report the disconnect
+#### Concurrent writes
+* you take the latest write and use that, easy as that
+
+
+## Design a Distributed Message Queue
+<img width="757" alt="Screenshot 2025-01-24 at 12 39 03 PM" src="https://github.com/user-attachments/assets/26de6f29-5c3e-4e86-be19-63555f8b1209" />
+
+* its all about **producers and consumers** and **decoupling services**
+* can be used for **batch processing** or **job queues**
+* Kafka is a little **more** than this, it's a **pub/sub event streaming platform**
+#### Pub/Sub
+* consumers subscribe to **Topics**, producers post to Topics
+* Different delivery types **as least once**, it's definitely getting there, **at MOST once**, we don't want duplicates and **exactly once**, self explanatory but pretty complicated and has it's tradeoffs
+* 
+
