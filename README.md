@@ -33,6 +33,7 @@ Here’s a comprehensive list of requirements every **architecture diagram** sho
 ---
 
 ### **3. CAP and PACELC**
+
    - **CAP Theorem**:
      - Clearly state trade-offs between **Consistency**, **Availability**, and **Partition Tolerance**.
      - Highlight the system's behavior during network partitions (e.g., eventual consistency vs. strong consistency).
@@ -280,7 +281,9 @@ High Event Volume:
 
 ## Design a Key-Value Store
 * Leader-Leader replication is **better for writes** and Leader-Follower, because multiple db copies can accept writes
+  
 <img width="970" alt="Screenshot 2025-01-23 at 5 21 18 PM" src="https://github.com/user-attachments/assets/8de42f66-15ea-44f0-82b0-eb16fd00a3cc" />
+
 ### PACELC theorem implications 
 * try and describe pac vs elc, if you can't look it up, think about an example where a node goes down and the latency it takes to update a leader-follower even when things aren't down. consistence takes time. 
 * we can use a "quorum" to decide how much latency vs consistency we should have. AKA should we wait for 1, some, or ALL of the nodes
